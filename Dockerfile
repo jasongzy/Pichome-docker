@@ -1,6 +1,6 @@
 FROM php:7.4-fpm-alpine3.14
 
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
+# RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 
 # entrypoint.sh and dependencies
 RUN set -ex; \
@@ -18,6 +18,8 @@ RUN set -ex; \
         unzip \
         sqlite \
         nginx \
+        glib \
+        glib-dev \
 	# forward request and error logs to docker log collector
 	  && ln -sf /dev/stdout /var/log/nginx/access.log \
 	  && ln -sf /dev/stderr /var/log/nginx/error.log \
