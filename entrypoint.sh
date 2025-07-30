@@ -5,7 +5,8 @@ set -e
 directory_empty() {
     [ -z "$(ls -A "$1/")" ]
 }
-if  directory_empty "/var/www/html"; then
+# if  directory_empty "/var/www/html"; then
+if [ ! -f "/var/www/html/index.php" ]; then
         if [ "$(id -u)" = 0 ]; then
             rsync_options="-rlDog --chown nginx:root"
         else
@@ -21,7 +22,7 @@ if  directory_empty "/var/www/html"; then
         rm -rf "$GNUPGHOME"
         apk del .fetch-deps
         echo "PICHOME is installing ..."
-        rsync $rsync_options --delete /usr/src/Pichome-master/ /var/www/html/
+        rsync $rsync_options -tu /usr/src/Pichome-master/ /var/www/html/
 else
         echo "PICHOME has been configured!"
 fi
